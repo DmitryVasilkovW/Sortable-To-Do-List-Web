@@ -4,28 +4,28 @@ To-Do-List
 ---
 <table>
   <tr>
-    <td colspan="2" style="text-align: center">labs</td>
+    <td colspan="2" style="text-align: center">Лабы</td>
   </tr>
   <tr>
-    <td><a href="#lab-1">lab 1</a></td>
-    <td><a href="#lab-2">lab 2</a></td>
+    <td><a href="#лабораторная-1">Лабораторная 1</a></td>
+    <td><a href="#лабораторная-2">Лабораторная 2</a></td>
   </tr>
   <tr>
-    <td><a href="#lab-3">lab 3</a></td>
-    <td><a href="#lab-4">lab 4</a></td>
+    <td><a href="#лабораторная-3">Лабораторная 3</a></td>
+    <td><a href="#лабораторная-4">Лабораторная 4</a></td>
   </tr>
   <tr>
-    <td><a href="#lab-5">lab 5</a></td>
-    <td><a href="#lab-6">lab 6</a></td>
+    <td><a href="#лабораторная-5">Лабораторная 5</a></td>
+    <td><a href="#лабораторная-6">Лабораторная 6</a></td>
   </tr>
   <tr>
-    <td colspan="2" style="text-align: center"><a href="#lab-7">lab 7</a></td>
+    <td colspan="2" style="text-align: center"><a href="#лабораторная-7">Лабораторная 7</a></td>
   </tr>
 </table>
 
 ---
 
-## Lab 1
+## Лабораторная 1
 
 Данная лабораторная подразумевает создание макета сайта без использования знаний CSS, только HTML. Создаем сайт резюме - портфолио. Главная задача данной лабораторной работы - ознакомиться с наиболее значимыми тегами и правилами их использования.
 
