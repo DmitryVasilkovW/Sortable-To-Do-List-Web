@@ -1,14 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Keep Clone</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
 </head>
 <body>
-<div>
-    <h1>
-        Pon
-    </h1>
+<div class="wrapper">
+    <nav id="sidebar" class="sidebar">
+        <h2>Tag customization</h2>
+        <label for="new-tag-input"></label><input type="text" id="new-tag-input" placeholder="Enter a new tag" class="tag-input">
+        <button onclick="addTag()" class="add-tag-btn">Add a tag</button>
+        <ul id="tag-list" class="tag-list"></ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="top-bar">
+            <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button>
+            <h1>My todo lists</h1>
+        </header>
+
+        <div class="tabs-container">
+            <div class="tabs" id="tabs"></div>
+            <button class="add-tab-btn" onclick="addNewTab()">+</button>
+        </div>
+
+        <div class="todo-lists" id="todo-lists"></div>
+    </div>
 </div>
 </body>
 </html>
