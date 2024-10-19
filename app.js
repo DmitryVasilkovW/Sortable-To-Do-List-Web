@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.remove('open');
         mainContent.style.marginLeft = '0';
     }
+
+    renderTags();
 });
 
 function switchTab(tabIndex) {
@@ -24,12 +26,16 @@ function switchTab(tabIndex) {
 
 function addTask(listIndex) {
     const taskInput = document.getElementById(`task-input-${listIndex}`).value;
+    const tagSelect = document.getElementById(`tag-select-${listIndex}`);
+    const selectedTag = tagSelect.value;
+
     if (taskInput) {
         const taskList = document.getElementById(`task-list-${listIndex}`);
         const li = document.createElement('li');
-        li.textContent = taskInput;
+        li.textContent = taskInput + (selectedTag ? ` [${selectedTag}]` : '');
         taskList.appendChild(li);
         document.getElementById(`task-input-${listIndex}`).value = '';
+        tagSelect.value = '';
     }
 }
 
@@ -37,7 +43,6 @@ function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.querySelector('.main-content');
 
-    // Тогглим (переключаем) состояние меню
     sidebar.classList.toggle('open');
 
     if (sidebar.classList.contains('open')) {
@@ -60,10 +65,23 @@ function addTag() {
 
 function renderTags() {
     const tagList = document.getElementById('tag-list');
+    const tagSelects = document.querySelectorAll('.tag-select');
+
     tagList.innerHTML = '';
+    tagSelects.forEach(select => {
+        select.innerHTML = '<option value="">Выберите тег</option>';
+    });
+
     tags.forEach(tag => {
         const li = document.createElement('li');
         li.textContent = tag;
         tagList.appendChild(li);
+
+        tagSelects.forEach(select => {
+            const option = document.createElement('option');
+            option.value = tag;
+            option.textContent = tag;
+            select.appendChild(option);
+        });
     });
 }
