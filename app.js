@@ -1,7 +1,6 @@
 let tasks = [];
-let filters = [];
+let sortTags = [];
 
-// Добавление новой задачи с тегами
 function addTask() {
     const taskInput = document.getElementById('task-input').value;
     const tagInput = document.getElementById('tag-input').value.split(',').map(tag => tag.trim());
@@ -15,23 +14,25 @@ function addTask() {
     }
 }
 
-// Отображение задач с учетом выбранных фильтров
 function renderTasks() {
     const taskList = document.getElementById('task-list');
     taskList.innerHTML = '';
 
-    const filteredTasks = tasks.filter(task => {
-        return filters.every(filter => task.tags.includes(filter));
-    });
+    if (sortTags.length > 0) {
+        tasks.sort((a, b) => {
+            const aMatches = sortTags.filter(tag => a.tags.includes(tag)).length;
+            const bMatches = sortTags.filter(tag => b.tags.includes(tag)).length;
+            return bMatches - aMatches;
+        });
+    }
 
-    filteredTasks.forEach(task => {
+    tasks.forEach(task => {
         const li = document.createElement('li');
         li.textContent = `${task.task} (Теги: ${task.tags.join(', ')})`;
         taskList.appendChild(li);
     });
 }
 
-// Отображение доступных тегов для фильтрации
 function renderTagFilters() {
     const tagFilters = document.getElementById('tag-filters');
     tagFilters.innerHTML = '';
@@ -40,23 +41,21 @@ function renderTagFilters() {
     allTags.forEach(tag => {
         const button = document.createElement('button');
         button.textContent = tag;
-        button.className = filters.includes(tag) ? 'active' : '';
-        button.onclick = () => toggleFilter(tag);
+        button.className = sortTags.includes(tag) ? 'active' : '';
+        button.onclick = () => toggleSortTag(tag);
         tagFilters.appendChild(button);
     });
 }
 
-// Переключение фильтров по тегам
-function toggleFilter(tag) {
-    if (filters.includes(tag)) {
-        filters = filters.filter(f => f !== tag);
+function toggleSortTag(tag) {
+    if (sortTags.includes(tag)) {
+        sortTags = sortTags.filter(f => f !== tag);
     } else {
-        filters.push(tag);
+        sortTags.push(tag);
     }
     renderTasks();
     renderTagFilters();
 }
 
-// Инициализация
 renderTasks();
 renderTagFilters();
