@@ -1,14 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Туду-лист с фильтрацией по тегам</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
 </head>
 <body>
-<div>
-    <h1>
-        Pon
-    </h1>
+<div class="container">
+    <h1 class="title">Туду-лист с фильтрацией по тегам</h1>
+
+    <div class="task-inputs">
+        <input type="text" id="task-input" class="task-input" placeholder="Введите новую задачу">
+        <input type="text" id="tag-input" class="tag-input" placeholder="Введите теги (через запятую)">
+        <button class="add-task-btn" onclick="addTask()">Добавить задачу</button>
+    </div>
+
+    <div class="filter-section">
+        <h2 class="filter-title">Фильтр по тегам</h2>
+        <div id="tag-filters" class="tag-filters"></div>
+    </div>
+
+    <ul id="task-list" class="task-list"></ul>
 </div>
 </body>
 </html>
