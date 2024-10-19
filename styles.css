@@ -70,10 +70,6 @@ body {
     z-index: 900;
 }
 
-.top-bar h1 {
-    margin-left: 10px;
-}
-
 .menu-btn {
     font-size: 24px;
     background: none;
@@ -82,20 +78,19 @@ body {
     color: #333;
 }
 
-/* Контент */
-.main-content {
-    margin-left: 250px;
-    flex-grow: 1;
-    padding-top: 60px;
-    overflow-y: auto;
-    height: 100vh;
-    transition: margin-left 0.3s;
+/* Контейнер вкладок */
+.tabs-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-top: 60px;
 }
 
-.main-content .tabs {
+.tabs {
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    flex-grow: 1;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .tab {
@@ -112,8 +107,30 @@ body {
     background-color: #f1f1f1;
 }
 
-.todo-list {
+.tab.active {
+    background-color: #e0e0e0;
+}
+
+.add-tab-btn {
+    background-color: #ffca28;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.todo-lists {
     padding: 20px;
+    margin-top: 20px;
+}
+
+.todo-list {
+    display: none;
+}
+
+.todo-list.active {
+    display: block;
 }
 
 .task-input, .add-task-btn {
@@ -144,4 +161,3 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-

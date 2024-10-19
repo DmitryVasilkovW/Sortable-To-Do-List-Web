@@ -10,53 +10,24 @@
 <body>
 <div class="wrapper">
     <nav id="sidebar" class="sidebar">
-        <h2>Настройка тегов</h2>
-        <label for="new-tag-input"></label><input type="text" id="new-tag-input" placeholder="Введите новый тег" class="tag-input">
-        <button onclick="addTag()" class="add-tag-btn">Добавить тег</button>
+        <h2>Tag customization</h2>
+        <label for="new-tag-input"></label><input type="text" id="new-tag-input" placeholder="Enter a new tag" class="tag-input">
+        <button onclick="addTag()" class="add-tag-btn">Add a tag</button>
         <ul id="tag-list" class="tag-list"></ul>
     </nav>
 
     <div class="main-content">
         <header class="top-bar">
             <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button>
-            <h1>Мои туду-листы</h1>
+            <h1>My todo lists</h1>
         </header>
 
-        <div class="tabs">
-            <button class="tab" onclick="switchTab(0)">Лист 1</button>
-            <button class="tab" onclick="switchTab(1)">Лист 2</button>
-            <button class="tab" onclick="switchTab(2)">Лист 3</button>
+        <div class="tabs-container">
+            <div class="tabs" id="tabs"></div>
+            <button class="add-tab-btn" onclick="addNewTab()">+</button>
         </div>
 
-        <div class="todo-list" id="list-0">
-            <h2>Туду-лист 1</h2>
-            <label for="task-input-0"></label><input type="text" id="task-input-0" class="task-input" placeholder="Введите новую задачу">
-            <label for="tag-select-0"></label><select id="tag-select-0" class="tag-select">
-                <option value="">Выберите тег</option>
-            </select>
-            <button onclick="addTask(0)" class="add-task-btn">Добавить задачу</button>
-            <ul id="task-list-0" class="task-list"></ul>
-        </div>
-        <div class="todo-list" id="list-1" style="display: none;">
-            <h2>Туду-лист 2</h2>
-            <label for="task-input-1"></label><input type="text" id="task-input-1" class="task-input" placeholder="Введите новую задачу">
-            <label for="tag-select-1"></label><select id="tag-select-1" class="tag-select">
-                <option value="">Выберите тег</option>
-            </select>
-            <button onclick="addTask(1)" class="add-task-btn">Добавить задачу</button>
-            <ul id="task-list-1" class="task-list"></ul>
-        </div>
-        <div class="todo-list" id="list-2" style="display: none;">
-            <h2>Туду-лист 3</h2>
-            <label for="task-input-2"></label><input type="text" id="task-input-2" class="task-input" placeholder="Введите новую задачу">
-            <label for="tag-select-2"></label><select id="tag-select-2" class="tag-select">
-                <option value="">Выберите тег</option>
-            </select>
-            <button onclick="addTask(2)" class="add-task-btn">Добавить задачу</button>
-            <ul id="task-list-2" class="task-list"></ul>
-        </div>
-
-
+        <div class="todo-lists" id="todo-lists"></div>
     </div>
 </div>
 </body>
