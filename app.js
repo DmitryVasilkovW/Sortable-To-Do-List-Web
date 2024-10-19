@@ -1,61 +1,49 @@
-let tasks = [];
-let sortTags = [];
+let currentTab = 0;
+let tags = [];
 
-function addTask() {
-    const taskInput = document.getElementById('task-input').value;
-    const tagInput = document.getElementById('tag-input').value.split(',').map(tag => tag.trim());
-
-    if (taskInput && tagInput.length) {
-        tasks.push({ task: taskInput, tags: tagInput });
-        document.getElementById('task-input').value = '';
-        document.getElementById('tag-input').value = '';
-        renderTasks();
-        renderTagFilters();
-    }
+function switchTab(tabIndex) {
+    document.getElementById(`list-${currentTab}`).style.display = 'none';
+    currentTab = tabIndex;
+    document.getElementById(`list-${currentTab}`).style.display = 'block';
 }
 
-function renderTasks() {
-    const taskList = document.getElementById('task-list');
-    taskList.innerHTML = '';
-
-    if (sortTags.length > 0) {
-        tasks.sort((a, b) => {
-            const aMatches = sortTags.filter(tag => a.tags.includes(tag)).length;
-            const bMatches = sortTags.filter(tag => b.tags.includes(tag)).length;
-            return bMatches - aMatches;
-        });
-    }
-
-    tasks.forEach(task => {
+function addTask(listIndex) {
+    const taskInput = document.getElementById(`task-input-${listIndex}`).value;
+    if (taskInput) {
+        const taskList = document.getElementById(`task-list-${listIndex}`);
         const li = document.createElement('li');
-        li.textContent = `${task.task} (Теги: ${task.tags.join(', ')})`;
+        li.textContent = taskInput;
         taskList.appendChild(li);
-    });
-}
-
-function renderTagFilters() {
-    const tagFilters = document.getElementById('tag-filters');
-    tagFilters.innerHTML = '';
-
-    const allTags = [...new Set(tasks.flatMap(task => task.tags))];
-    allTags.forEach(tag => {
-        const button = document.createElement('button');
-        button.textContent = tag;
-        button.className = sortTags.includes(tag) ? 'active' : '';
-        button.onclick = () => toggleSortTag(tag);
-        tagFilters.appendChild(button);
-    });
-}
-
-function toggleSortTag(tag) {
-    if (sortTags.includes(tag)) {
-        sortTags = sortTags.filter(f => f !== tag);
-    } else {
-        sortTags.push(tag);
+        document.getElementById(`task-input-${listIndex}`).value = '';
     }
-    renderTasks();
-    renderTagFilters();
 }
 
-renderTasks();
-renderTagFilters();
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('open');
+    const mainContent = document.querySelector('.main-content');
+    if (sidebar.classList.contains('open')) {
+        mainContent.style.marginLeft = '250px';
+    } else {
+        mainContent.style.marginLeft = '0';
+    }
+}
+
+function addTag() {
+    const newTagInput = document.getElementById('new-tag-input').value;
+    if (newTagInput) {
+        tags.push(newTagInput);
+        renderTags();
+        document.getElementById('new-tag-input').value = '';
+    }
+}
+
+function renderTags() {
+    const tagList = document.getElementById('tag-list');
+    tagList.innerHTML = '';
+    tags.forEach(tag => {
+        const li = document.createElement('li');
+        li.textContent = tag;
+        tagList.appendChild(li);
+    });
+}

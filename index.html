@@ -3,28 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Туду-лист с фильтрацией по тегам</title>
+    <title>Google Keep Clone</title>
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
 </head>
 <body>
-<div class="container">
-    <h1 class="title">Туду-лист с фильтрацией по тегам</h1>
+<div class="wrapper">
+    <nav id="sidebar" class="sidebar">
+        <h2>Настройка тегов</h2>
+        <input type="text" id="new-tag-input" placeholder="Введите новый тег" class="tag-input">
+        <button onclick="addTag()" class="add-tag-btn">Добавить тег</button>
+        <ul id="tag-list" class="tag-list"></ul>
+    </nav>
 
-    <div class="task-inputs">
-        <label for="task-input"></label><input type="text" id="task-input" class="task-input"
-                                               placeholder="Введите новую задачу">
-        <label for="tag-input"></label><input type="text" id="tag-input" class="tag-input"
-                                              placeholder="Введите теги (через запятую)">
-        <button class="add-task-btn" onclick="addTask()">Добавить задачу</button>
+    <div class="main-content">
+        <header class="top-bar">
+            <button class="menu-btn" onclick="toggleSidebar()">&#9776;</button>
+            <h1>Мои туду-листы</h1>
+        </header>
+
+        <div class="tabs">
+            <button class="tab" onclick="switchTab(0)">Лист 1</button>
+            <button class="tab" onclick="switchTab(1)">Лист 2</button>
+            <button class="tab" onclick="switchTab(2)">Лист 3</button>
+        </div>
+
+        <div id="todo-lists">
+            <div class="todo-list" id="list-0">
+                <h2>Туду-лист 1</h2>
+                <input type="text" id="task-input-0" class="task-input" placeholder="Введите новую задачу">
+                <button onclick="addTask(0)" class="add-task-btn">Добавить задачу</button>
+                <ul id="task-list-0" class="task-list"></ul>
+            </div>
+            <div class="todo-list" id="list-1" style="display: none;">
+                <h2>Туду-лист 2</h2>
+                <input type="text" id="task-input-1" class="task-input" placeholder="Введите новую задачу">
+                <button onclick="addTask(1)" class="add-task-btn">Добавить задачу</button>
+                <ul id="task-list-1" class="task-list"></ul>
+            </div>
+            <div class="todo-list" id="list-2" style="display: none;">
+                <h2>Туду-лист 3</h2>
+                <input type="text" id="task-input-2" class="task-input" placeholder="Введите новую задачу">
+                <button onclick="addTask(2)" class="add-task-btn">Добавить задачу</button>
+                <ul id="task-list-2" class="task-list"></ul>
+            </div>
+        </div>
     </div>
-
-    <div class="filter-section">
-        <h2 class="filter-title">Фильтр по тегам</h2>
-        <div id="tag-filters" class="tag-filters"></div>
-    </div>
-
-    <ul id="task-list" class="task-list"></ul>
 </div>
 </body>
 </html>
