@@ -18,7 +18,3 @@ document.addEventListener('DOMContentLoaded', function () {
     renderTags();
     addNewTab();
 });
-
-document.addEventListener('DOMContentLoaded', function () {
-    addNewTab();
-});

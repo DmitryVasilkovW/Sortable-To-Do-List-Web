@@ -8,15 +8,7 @@ function addTask(tabIndex) {
         li.textContent = taskValue;
 
         // Создание кнопки меню с многоточием
-        const menuButton = document.createElement('button');
-        menuButton.textContent = '...';
-        menuButton.classList.add('menu-button');
-
-        // Добавляем обработчик для кнопки
-        menuButton.onclick = (event) => {
-            event.stopPropagation();  // чтобы не закрывалось меню при клике на задачу
-            showContextMenu(event, li, tabIndex);  // Показываем меню
-        };
+        const menuButton = createMenuButton(li, tabIndex);
 
         li.appendChild(menuButton);
         taskList.appendChild(li);
@@ -27,6 +19,19 @@ function addTask(tabIndex) {
     } else {
         alert('Please enter a task');
     }
+}
+
+function createMenuButton(taskElement, tabIndex) {
+    const menuButton = document.createElement('button');
+    menuButton.textContent = '...';
+    menuButton.classList.add('menu-button');
+
+    menuButton.onclick = (event) => {
+        event.stopPropagation(); // Чтобы не закрывалось меню при клике на задачу
+        showContextMenu(event, taskElement, tabIndex); // Показываем меню
+    };
+
+    return menuButton;
 }
 
 function showContextMenu(event, taskElement, tabIndex) {
@@ -85,6 +90,9 @@ function loadTasks(tabIndex) {
     todoListsData[tabIndex].forEach(task => {
         const li = document.createElement('li');
         li.textContent = task;
+        const menuButton = createMenuButton(li, tabIndex);
+        li.appendChild(menuButton);
+        
         taskList.appendChild(li);
     });
 }
