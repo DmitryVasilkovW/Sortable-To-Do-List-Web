@@ -7,7 +7,6 @@ function addTask(tabIndex) {
         const li = document.createElement('li');
         li.textContent = taskValue;
 
-        // Создание кнопки меню с многоточием
         const menuButton = createMenuButton(li, tabIndex);
 
         li.appendChild(menuButton);
@@ -27,36 +26,32 @@ function createMenuButton(taskElement, tabIndex) {
     menuButton.classList.add('menu-button');
 
     menuButton.onclick = (event) => {
-        event.stopPropagation(); // Чтобы не закрывалось меню при клике на задачу
-        showContextMenu(event, taskElement, tabIndex); // Показываем меню
+        event.stopPropagation();
+        showContextMenu(event, taskElement, tabIndex);
     };
 
     return menuButton;
 }
 
 function showContextMenu(event, taskElement, tabIndex) {
-    // Создаем меню
     const contextMenu = document.createElement('ul');
     contextMenu.classList.add('context-menu');
 
-    // Создаем пункт меню для удаления
     const deleteOption = document.createElement('li');
-    deleteOption.textContent = 'Удалить';
+    deleteOption.textContent = 'remove task';
     deleteOption.classList.add('delete-option');
 
     deleteOption.onclick = () => {
         deleteTask(taskElement, tabIndex);
-        contextMenu.remove();  // Убираем меню после действия
+        contextMenu.remove();
     };
 
     contextMenu.appendChild(deleteOption);
 
-    // Позиционируем меню рядом с кнопкой
     document.body.appendChild(contextMenu);
     contextMenu.style.left = `${event.pageX}px`;
     contextMenu.style.top = `${event.pageY}px`;
 
-    // Закрыть меню, если кликнули вне меню
     document.addEventListener('click', function closeMenu(event) {
         if (!contextMenu.contains(event.target)) {
             contextMenu.remove();
@@ -66,18 +61,17 @@ function showContextMenu(event, taskElement, tabIndex) {
 }
 
 function deleteTask(taskElement, tabIndex) {
-    // Удаляем задачу из DOM
     taskElement.remove();
 
-    // Удаляем задачу из todoListsData
     const taskIndex = Array.from(taskElement.parentNode.children).indexOf(taskElement);
-    todoListsData[tabIndex].splice(taskIndex, 1);  // Удаляем задачу по индексу
+    todoListsData[tabIndex].splice(taskIndex, 1);
 }
 
 function saveTasks(tabIndex) {
     const taskList = document.getElementById(`task-list-${tabIndex}`);
     const tasks = [];
-
+    
+    taskList.querySelectorAll('.menu-button').forEach(button => button.remove());
     taskList.querySelectorAll('li').forEach(li => tasks.push(li.textContent));
 
     todoListsData[tabIndex] = tasks;

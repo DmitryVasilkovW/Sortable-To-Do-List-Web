@@ -16,7 +16,7 @@ function switchTab(tabIndex) {
 function addNewTab() {
     const tabsContainer = document.getElementById('tabs');
     const todoListsContainer = document.getElementById('todo-lists');
-    const tabIndex = Object.keys(todoListsData).length;  // Номер новой вкладки
+    const tabIndex = Object.keys(todoListsData).length;
 
     const newTab = document.createElement('div');
     newTab.classList.add('tab');
