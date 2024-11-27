@@ -58,7 +58,7 @@ function closeAllContextElements(event) {
 
     if (!clickedInside) {
         activeContextElements.forEach(element => element.remove());
-        activeContextElements.length = 0; // Очищаем массив
+        activeContextElements.length = 0;
     }
 }
 

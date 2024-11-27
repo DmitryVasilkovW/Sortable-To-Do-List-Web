@@ -23,7 +23,7 @@ function addTask(tabIndex) {
     }
 }
 
-function updateTaskDisplay(taskElement, taskData) {
+function updateTaskDisplay(taskElement, taskData, tabIndex) {
     taskElement.innerHTML = '';
     taskElement.textContent = taskData.text;
 
@@ -34,7 +34,7 @@ function updateTaskDisplay(taskElement, taskData) {
         taskElement.appendChild(tagsContainer);
     }
 
-    const menuButton = createMenuButton(taskElement, taskData.tabIndex);
+    const menuButton = createMenuButton(taskElement, tabIndex);
     taskElement.appendChild(menuButton);
 }
 

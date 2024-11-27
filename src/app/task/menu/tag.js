@@ -34,7 +34,7 @@ function addTagToTask(taskElement, tabIndex, tag) {
 
     if (!taskData.tags.includes(tag)) {
         taskData.tags.push(tag);
-        updateTaskDisplay(taskElement, taskData);
+        updateTaskDisplay(taskElement, taskData, tabIndex);
     } else {
         alert('Tag already added!');
     }
