@@ -43,14 +43,11 @@ function updateTaskDisplay(taskElement, taskData, tabIndex) {
 
     taskElement.appendChild(taskRow);
 
-    if (taskData.tags.length > 0) {
-        const tagsContainer = document.createElement('span');
-        tagsContainer.classList.add('task-tags');
-        tagsContainer.textContent = `Tags: ${taskData.tags.join(', ')}`;
-        taskElement.appendChild(tagsContainer);
-    }
+    const tagsContainer = document.createElement('div');
+    tagsContainer.classList.add('tags-container');
+    showTags(tagsContainer, taskData.tags);
+    taskElement.appendChild(tagsContainer);
 }
-
 
 function saveTasks(tabIndex) {
     const taskList = document.getElementById(`task-list-${tabIndex}`);
@@ -60,9 +57,13 @@ function saveTasks(tabIndex) {
 
     taskList.querySelectorAll('li').forEach(li => {
         const text = li.querySelector('.task-text')?.textContent || '';
-        const tags = Array.from(li.querySelectorAll('.task-tags')).map(tag => tag.textContent);
 
-        tasks.push({text, tags});
+        const tagsContainer = li.querySelector('.task-tags');
+        const tags = tagsContainer
+            ? tagsContainer.textContent.replace('Tags: ', '').split(', ').filter(tag => tag)
+            : [];
+
+        tasks.push({ text, tags });
     });
 
     todoListsData[tabIndex] = tasks;
@@ -82,13 +83,22 @@ function loadTasks(tabIndex) {
         const menuButton = createMenuButton(li, tabIndex);
         li.appendChild(menuButton);
 
-        task.tags.forEach(tag => {
-            const tagElement = document.createElement('span');
-            tagElement.classList.add('task-tags');
-            tagElement.textContent = tag.toString();
-            li.appendChild(tagElement);
-        });
+        const tagsContainer = document.createElement('div');
+        tagsContainer.classList.add('tags-container');
+        showTags(tagsContainer, task.tags);
+        li.appendChild(tagsContainer);
 
         taskList.appendChild(li);
     });
+}
+
+function showTags(container, tags) {
+    container.innerHTML = '';
+
+    if (tags.length > 0) {
+        const tagsList = document.createElement('span');
+        tagsList.classList.add('task-tags');
+        tagsList.textContent = 'Tags: ' + tags.join(', ');
+        container.appendChild(tagsList);
+    }
 }
