@@ -17,24 +17,10 @@ function showContextMenu(event, taskElement, tabIndex) {
     const contextMenu = document.createElement('ul');
     contextMenu.classList.add('context-menu');
 
-    const deleteOption = document.createElement('li');
-    deleteOption.textContent = 'Remove task';
-    deleteOption.classList.add('delete-option');
-    deleteOption.onclick = () => {
-        deleteTask(taskElement, tabIndex);
-        contextMenu.remove();
-        removeFromActiveElements(contextMenu);
-    };
+    const deleteOption = createDeleteOption(contextMenu, taskElement, tabIndex);
     contextMenu.appendChild(deleteOption);
 
-    const addTagOption = document.createElement('li');
-    addTagOption.textContent = 'Add Tag';
-    addTagOption.classList.add('add-tag-option');
-    addTagOption.onclick = () => {
-        showTagSelector(taskElement, tabIndex);
-        contextMenu.remove();
-        removeFromActiveElements(contextMenu);
-    };
+    const addTagOption = createAddTagOption(contextMenu, taskElement, tabIndex);
     contextMenu.appendChild(addTagOption);
 
     document.body.appendChild(contextMenu);
@@ -50,6 +36,31 @@ function showContextMenu(event, taskElement, tabIndex) {
         }
     });
 }
+
+function createDeleteOption(contextMenu, taskElement, tabIndex) {
+    const deleteOption = document.createElement('li');
+    deleteOption.textContent = 'Remove task';
+    deleteOption.classList.add('delete-option');
+    deleteOption.onclick = () => {
+        deleteTask(taskElement, tabIndex);
+        contextMenu.remove();
+        removeFromActiveElements(contextMenu);
+    };
+    return deleteOption;
+}
+
+function createAddTagOption(contextMenu, taskElement, tabIndex) {
+    const addTagOption = document.createElement('li');
+    addTagOption.textContent = 'Add Tag';
+    addTagOption.classList.add('add-tag-option');
+    addTagOption.onclick = () => {
+        showTagSelector(taskElement, tabIndex);
+        contextMenu.remove();
+        removeFromActiveElements(contextMenu);
+    };
+    return addTagOption;
+}
+
 
 function closeAllContextElements(event) {
     const clickedInside = activeContextElements.some(element =>
