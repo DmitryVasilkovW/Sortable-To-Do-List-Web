@@ -1,3 +1,5 @@
+const activeContextElements = [];
+
 function addTask(tabIndex) {
     const taskInput = document.getElementById(`task-input-${tabIndex}`);
     const taskList = document.getElementById(`task-list-${tabIndex}`);
@@ -46,6 +48,7 @@ function showContextMenu(event, taskElement, tabIndex) {
     deleteOption.onclick = () => {
         deleteTask(taskElement, tabIndex);
         contextMenu.remove();
+        removeFromActiveElements(contextMenu);
     };
     contextMenu.appendChild(deleteOption);
 
@@ -55,19 +58,41 @@ function showContextMenu(event, taskElement, tabIndex) {
     addTagOption.onclick = () => {
         showTagSelector(taskElement, tabIndex);
         contextMenu.remove();
+        removeFromActiveElements(contextMenu);
     };
     contextMenu.appendChild(addTagOption);
 
     document.body.appendChild(contextMenu);
+    activeContextElements.push(contextMenu);
+
     contextMenu.style.left = `${event.pageX}px`;
     contextMenu.style.top = `${event.pageY}px`;
 
     document.addEventListener('click', function closeMenu(event) {
         if (!contextMenu.contains(event.target)) {
-            contextMenu.remove();
+            closeAllContextElements();
             document.removeEventListener('click', closeMenu);
         }
     });
+}
+
+function closeAllContextElements(event) {
+    const clickedInside = activeContextElements.some(element =>
+        element.contains(event.target)
+    );
+
+    if (!clickedInside) {
+        activeContextElements.forEach(element => element.remove());
+        activeContextElements.length = 0; // Очищаем массив
+    }
+}
+
+
+function removeFromActiveElements(element) {
+    const index = activeContextElements.indexOf(element);
+    if (index !== -1) {
+        activeContextElements.splice(index, 1);
+    }
 }
 
 function showTagSelector(taskElement, tabIndex) {
@@ -83,6 +108,7 @@ function showTagSelector(taskElement, tabIndex) {
     `;
 
     document.body.appendChild(tagSelector);
+    activeContextElements.push(tagSelector);
 
     const rect = taskElement.getBoundingClientRect();
     tagSelector.style.left = `${rect.right + 10}px`;
@@ -95,8 +121,8 @@ function showTagSelector(taskElement, tabIndex) {
             addTagToTask(taskElement, tabIndex, selectedTag);
         }
         tagSelector.remove();
+        removeFromActiveElements(tagSelector);
     };
-
 }
 
 function addTagToTask(taskElement, tabIndex, tag) {
