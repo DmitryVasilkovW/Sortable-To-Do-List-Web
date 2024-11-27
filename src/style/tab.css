@@ -1,0 +1,40 @@
+.tabs-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-top: 60px;
+}
+
+.tabs {
+    display: flex;
+    flex-grow: 1;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.tab {
+    background-color: #fff;
+    padding: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s;
+}
+
+.tab:hover {
+    background-color: #f1f1f1;
+}
+
+.tab.active {
+    background-color: #e0e0e0;
+}
+
+.add-tab-btn {
+    background-color: #ffca28;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+}

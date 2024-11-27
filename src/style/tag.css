@@ -1,0 +1,28 @@
+.tag-input, .add-tag-btn {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.tag-list {
+    list-style: none;
+    padding: 0;
+}
+
+.tag-list li {
+    padding: 8px;
+    background-color: #f9f9f9;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.tag-select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
