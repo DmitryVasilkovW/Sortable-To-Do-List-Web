@@ -5,11 +5,15 @@ function addTask(tabIndex) {
 
     if (taskValue) {
         const li = document.createElement('li');
-        li.textContent = taskValue;
+
+        const textElement = document.createElement('p');
+        textElement.classList.add('task-text');
+        textElement.textContent = taskValue;
+        li.appendChild(textElement);
 
         const menuButton = createMenuButton(li, tabIndex);
-
         li.appendChild(menuButton);
+
         taskList.appendChild(li);
 
         if (!todoListsData[tabIndex]) {
@@ -25,7 +29,10 @@ function addTask(tabIndex) {
 
 function updateTaskDisplay(taskElement, taskData, tabIndex) {
     taskElement.innerHTML = '';
-    taskElement.textContent = taskData.text;
+    const textElement = document.createElement('p');
+    textElement.classList.add('task-text');
+    textElement.textContent = taskData.text;
+    taskElement.appendChild(textElement);
 
     if (taskData.tags.length > 0) {
         const tagsContainer = document.createElement('span');
@@ -41,9 +48,15 @@ function updateTaskDisplay(taskElement, taskData, tabIndex) {
 function saveTasks(tabIndex) {
     const taskList = document.getElementById(`task-list-${tabIndex}`);
     const tasks = [];
-    
+
     taskList.querySelectorAll('.menu-button').forEach(button => button.remove());
-    taskList.querySelectorAll('li').forEach(li => tasks.push(li.textContent));
+
+    taskList.querySelectorAll('li').forEach(li => {
+        const text = li.querySelector('.task-text')?.textContent || '';
+        const tags = Array.from(li.querySelectorAll('.task-tags')).map(tag => tag.textContent);
+
+        tasks.push({text, tags});
+    });
 
     todoListsData[tabIndex] = tasks;
 }
@@ -54,10 +67,21 @@ function loadTasks(tabIndex) {
 
     todoListsData[tabIndex].forEach(task => {
         const li = document.createElement('li');
-        li.textContent = task;
+        const taskText = document.createElement('span');
+        taskText.classList.add('task-text');
+        taskText.textContent = task.text;
+        li.appendChild(taskText);
+
+        task.tags.forEach(tag => {
+            const tagElement = document.createElement('span');
+            tagElement.classList.add('task-tags');
+            tagElement.textContent = tag.toString();
+            li.appendChild(tagElement);
+        });
+
         const menuButton = createMenuButton(li, tabIndex);
         li.appendChild(menuButton);
-        
+
         taskList.appendChild(li);
     });
 }
