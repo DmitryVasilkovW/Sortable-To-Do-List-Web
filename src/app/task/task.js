@@ -29,10 +29,19 @@ function addTask(tabIndex) {
 
 function updateTaskDisplay(taskElement, taskData, tabIndex) {
     taskElement.innerHTML = '';
+
+    const taskRow = document.createElement('div');
+    taskRow.classList.add('task-row');
+
     const textElement = document.createElement('p');
     textElement.classList.add('task-text');
     textElement.textContent = taskData.text;
-    taskElement.appendChild(textElement);
+    taskRow.appendChild(textElement);
+
+    const menuButton = createMenuButton(taskElement, tabIndex);
+    taskRow.appendChild(menuButton);
+
+    taskElement.appendChild(taskRow);
 
     if (taskData.tags.length > 0) {
         const tagsContainer = document.createElement('span');
@@ -40,10 +49,8 @@ function updateTaskDisplay(taskElement, taskData, tabIndex) {
         tagsContainer.textContent = `Tags: ${taskData.tags.join(', ')}`;
         taskElement.appendChild(tagsContainer);
     }
-
-    const menuButton = createMenuButton(taskElement, tabIndex);
-    taskElement.appendChild(menuButton);
 }
+
 
 function saveTasks(tabIndex) {
     const taskList = document.getElementById(`task-list-${tabIndex}`);
@@ -72,15 +79,15 @@ function loadTasks(tabIndex) {
         taskText.textContent = task.text;
         li.appendChild(taskText);
 
+        const menuButton = createMenuButton(li, tabIndex);
+        li.appendChild(menuButton);
+
         task.tags.forEach(tag => {
             const tagElement = document.createElement('span');
             tagElement.classList.add('task-tags');
             tagElement.textContent = tag.toString();
             li.appendChild(tagElement);
         });
-
-        const menuButton = createMenuButton(li, tabIndex);
-        li.appendChild(menuButton);
 
         taskList.appendChild(li);
     });
