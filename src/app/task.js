@@ -70,7 +70,7 @@ function showContextMenu(event, taskElement, tabIndex) {
 
     document.addEventListener('click', function closeMenu(event) {
         if (!contextMenu.contains(event.target)) {
-            closeAllContextElements();
+            closeAllContextElements(event);
             document.removeEventListener('click', closeMenu);
         }
     });
@@ -124,6 +124,7 @@ function showTagSelector(taskElement, tabIndex) {
         removeFromActiveElements(tagSelector);
     };
 }
+
 
 function addTagToTask(taskElement, tabIndex, tag) {
     const taskIndex = Array.from(taskElement.parentNode.children).indexOf(taskElement);
