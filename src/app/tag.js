@@ -1,20 +1,5 @@
 let tags = [];
 
-function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.querySelector('.main-content');
-
-    sidebar.classList.toggle('open');
-
-    if (sidebar.classList.contains('open')) {
-        mainContent.style.marginLeft = '250px';
-        localStorage.setItem('sidebarOpen', 'true');
-    } else {
-        mainContent.style.marginLeft = '0';
-        localStorage.setItem('sidebarOpen', 'false');
-    }
-}
-
 function addTag() {
     const newTagInput = document.getElementById('new-tag-input').value;
     if (newTagInput) {

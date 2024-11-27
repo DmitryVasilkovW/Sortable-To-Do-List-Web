@@ -1,4 +1,11 @@
 let currentTab = 0;
+let hoveredTabId = null;
+
+document.addEventListener('keydown', (event) => {
+    if ((event.key === 'Delete' || event.key === 'Backspace') && hoveredTabId !== null) {
+        showDeleteConfirmation(hoveredTabId);
+    }
+});
 
 function switchTab(tabIndex) {
     saveTasks(currentTab);
@@ -23,6 +30,8 @@ function addNewTab() {
     newTab.id = `tab-${tabIndex}`;
     newTab.textContent = `Sheet ${tabIndex + 1}`;
     newTab.onclick = () => switchTab(tabIndex);
+    newTab.onmouseover = () => (hoveredTabId = tabIndex);
+    newTab.onmouseout = () => (hoveredTabId = null);
     tabsContainer.appendChild(newTab);
 
     const newTodoList = document.createElement('div');
@@ -43,4 +52,24 @@ function addNewTab() {
     }
 
     document.getElementById(`add-task-btn-${tabIndex}`).onclick = () => addTask(tabIndex);
+}
+
+function showDeleteConfirmation(tabIndex) {
+    const confirmation = confirm(`Do you really want to delete tab ${tabIndex + 1}?`);
+    if (confirmation) {
+        deleteTab(tabIndex);
+    }
+}
+
+function deleteTab(tabIndex) {
+    document.getElementById(`tab-${tabIndex}`).remove();
+    document.getElementById(`list-${tabIndex}`).remove();
+    delete todoListsData[tabIndex];
+
+    if (currentTab === tabIndex) {
+        currentTab = 0;
+        if (document.getElementById(`tab-0`)) {
+            switchTab(0);
+        }
+    }
 }
