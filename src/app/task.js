@@ -12,7 +12,10 @@ function addTask(tabIndex) {
         li.appendChild(menuButton);
         taskList.appendChild(li);
 
-        todoListsData[tabIndex].push(taskValue);
+        if (!todoListsData[tabIndex]) {
+            todoListsData[tabIndex] = [];
+        }
+        todoListsData[tabIndex].push({ text: taskValue, tags: [] });
 
         taskInput.value = '';
     } else {
@@ -38,15 +41,22 @@ function showContextMenu(event, taskElement, tabIndex) {
     contextMenu.classList.add('context-menu');
 
     const deleteOption = document.createElement('li');
-    deleteOption.textContent = 'remove task';
+    deleteOption.textContent = 'Remove task';
     deleteOption.classList.add('delete-option');
-
     deleteOption.onclick = () => {
         deleteTask(taskElement, tabIndex);
         contextMenu.remove();
     };
-
     contextMenu.appendChild(deleteOption);
+
+    const addTagOption = document.createElement('li');
+    addTagOption.textContent = 'Add Tag';
+    addTagOption.classList.add('add-tag-option');
+    addTagOption.onclick = () => {
+        showTagSelector(taskElement, tabIndex);
+        contextMenu.remove();
+    };
+    contextMenu.appendChild(addTagOption);
 
     document.body.appendChild(contextMenu);
     contextMenu.style.left = `${event.pageX}px`;
@@ -59,6 +69,64 @@ function showContextMenu(event, taskElement, tabIndex) {
         }
     });
 }
+
+function showTagSelector(taskElement, tabIndex) {
+    const tagSelector = document.createElement('div');
+    tagSelector.classList.add('tag-selector');
+    tagSelector.innerHTML = `
+        <label for="tag-select">Select a tag:</label>
+        <select id="tag-select">
+            <option value="">Select a tag</option>
+            ${tags.map(tag => `<option value="${tag}">${tag}</option>`).join('')}
+        </select>
+        <button id="add-tag-button">Add</button>
+    `;
+
+    document.body.appendChild(tagSelector);
+
+    const rect = taskElement.getBoundingClientRect();
+    tagSelector.style.left = `${rect.right + 10}px`;
+    tagSelector.style.top = `${rect.top}px`;
+
+    const addButton = tagSelector.querySelector('#add-tag-button');
+    addButton.onclick = () => {
+        const selectedTag = tagSelector.querySelector('#tag-select').value;
+        if (selectedTag) {
+            addTagToTask(taskElement, tabIndex, selectedTag);
+        }
+        tagSelector.remove();
+    };
+
+}
+
+function addTagToTask(taskElement, tabIndex, tag) {
+    const taskIndex = Array.from(taskElement.parentNode.children).indexOf(taskElement);
+    const taskData = todoListsData[tabIndex][taskIndex];
+
+    if (!taskData.tags.includes(tag)) {
+        taskData.tags.push(tag);
+        updateTaskDisplay(taskElement, taskData);
+    } else {
+        alert('Tag already added!');
+    }
+}
+
+
+function updateTaskDisplay(taskElement, taskData) {
+    taskElement.innerHTML = '';
+    taskElement.textContent = taskData.text;
+
+    if (taskData.tags.length > 0) {
+        const tagsContainer = document.createElement('span');
+        tagsContainer.classList.add('task-tags');
+        tagsContainer.textContent = `Tags: ${taskData.tags.join(', ')}`;
+        taskElement.appendChild(tagsContainer);
+    }
+
+    const menuButton = createMenuButton(taskElement, taskData.tabIndex);
+    taskElement.appendChild(menuButton);
+}
+
 
 function deleteTask(taskElement, tabIndex) {
     taskElement.remove();
