@@ -29,22 +29,30 @@ function showTagSelector(taskElement, tabIndex) {
 }
 
 function addTagToTask(taskElement, tabIndex, tagName) {
-    const tagObject = tags.find(t => t.name === tagName) ||
-        (typeof tags[0] === 'string' ? { name: tagName, weight: 0 } : null);
-
-    if (!tagObject) {
-        alert(`Tag "${tagName}" не найден в системе!`);
-        return;
-    }
+    const [parsedTag] = parseTags(tagName);
 
     const taskIndex = Array.from(taskElement.parentNode.children).indexOf(taskElement);
     const taskData = todoListsData[tabIndex][taskIndex];
 
-    if (!taskData.tags.some(t => t.tag === tagName)) {
-        taskData.tags.push({ tag: tagName, weight: tagObject.weight || 0 });
+    if (!taskData.tags.some(t => t.tag === parsedTag.tag)) {
+        taskData.tags.push(parsedTag);
         updateTaskDisplay(taskElement, taskData, tabIndex);
         sortTasks(tabIndex);
     } else {
         alert(`Tag "${tagName}" уже добавлен к задаче!`);
     }
+}
+
+function parseTags(tagString) {
+    return tagString
+        .split(', ')
+        .filter(tag => tag)
+        .map(tagName => {
+            const tagObject = tags.find(t => t.name === tagName) ||
+                (typeof tags[0] === 'string' ? { name: tagName, weight: 0 } : null);
+
+            return tagObject
+                ? { tag: tagObject.name, weight: tagObject.weight || 0 }
+                : { tag: tagName, weight: 0 };
+        });
 }

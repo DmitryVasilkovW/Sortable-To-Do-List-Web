@@ -35,9 +35,8 @@ function saveTasks(tabIndex) {
         const text = li.querySelector('.task-text')?.textContent || '';
 
         const tagsContainer = li.querySelector('.task-tags');
-        const tags = tagsContainer
-            ? tagsContainer.textContent.replace('Tags: ', '').split(', ').filter(tag => tag)
-            : [];
+        const tagString = tagsContainer ? tagsContainer.textContent.replace('Tags: ', '') : '';
+        const tags = parseTags(tagString);
 
         tasks.push({ text, tags });
     });
