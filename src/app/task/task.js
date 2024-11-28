@@ -82,7 +82,24 @@ function showTags(container, tags) {
     if (tags.length > 0) {
         const tagsList = document.createElement('span');
         tagsList.classList.add('task-tags');
-        tagsList.textContent = 'Tags: ' + tags.join(', ');
+        
+        tagsList.textContent = 'Tags: ' + getTagsAsString(tags)
         container.appendChild(tagsList);
     }
+}
+
+function getTagsAsString(tags) {
+    return tags.map(tag => tag.tag).join(', ');
+}
+
+function sortTasks(tabIndex) {
+    const tasks = todoListsData[tabIndex];
+
+    tasks.sort((a, b) => {
+        const weightA = a.tags.reduce((sum, tag) => sum + tag.weight, 0);
+        const weightB = b.tags.reduce((sum, tag) => sum + tag.weight, 0);
+        return weightB - weightA;
+    });
+
+    loadTasks(tabIndex);
 }

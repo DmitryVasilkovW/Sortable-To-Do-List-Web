@@ -5,7 +5,7 @@ function showTagSelector(taskElement, tabIndex) {
         <label for="tag-select">Select a tag:</label>
         <select id="tag-select">
             <option value="">Select a tag</option>
-            ${tags.map(tag => `<option value="${tag}">${tag}</option>`).join('')}
+            ${tags.map(tag => `<option value="${tag.name}">${tag.name}</option>`).join('')}
         </select>
         <button id="add-tag-button">Add</button>
     `;
@@ -28,14 +28,23 @@ function showTagSelector(taskElement, tabIndex) {
     };
 }
 
-function addTagToTask(taskElement, tabIndex, tag) {
+function addTagToTask(taskElement, tabIndex, tagName) {
+    const tagObject = tags.find(t => t.name === tagName) ||
+        (typeof tags[0] === 'string' ? { name: tagName, weight: 0 } : null);
+
+    if (!tagObject) {
+        alert(`Tag "${tagName}" не найден в системе!`);
+        return;
+    }
+
     const taskIndex = Array.from(taskElement.parentNode.children).indexOf(taskElement);
     const taskData = todoListsData[tabIndex][taskIndex];
 
-    if (!taskData.tags.includes(tag)) {
-        taskData.tags.push(tag);
+    if (!taskData.tags.some(t => t.tag === tagName)) {
+        taskData.tags.push({ tag: tagName, weight: tagObject.weight || 0 });
         updateTaskDisplay(taskElement, taskData, tabIndex);
+        sortTasks(tabIndex);
     } else {
-        alert('Tag already added!');
+        alert(`Tag "${tagName}" уже добавлен к задаче!`);
     }
 }

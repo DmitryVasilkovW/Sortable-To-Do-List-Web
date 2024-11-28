@@ -1,4 +1,3 @@
-let tabs = 0;
 let todoListsData = [];
 
 document.addEventListener('DOMContentLoaded', function () {
