@@ -13,10 +13,6 @@ function showTagSelector(taskElement, tabIndex) {
     document.body.appendChild(tagSelector);
     activeContextElements.push(tagSelector);
 
-    const rect = taskElement.getBoundingClientRect();
-    tagSelector.style.left = `${rect.right + 10}px`;
-    tagSelector.style.top = `${rect.top}px`;
-
     const addButton = tagSelector.querySelector('#add-tag-button');
     addButton.onclick = () => {
         const selectedTag = tagSelector.querySelector('#tag-select').value;

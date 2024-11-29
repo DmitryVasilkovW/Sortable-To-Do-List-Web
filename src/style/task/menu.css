@@ -17,10 +17,93 @@
 }
 
 .tag-selector {
+    position: fixed;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    width: 300px;
+}
+
+.tag-selector button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.tag-selector button:hover {
+    background-color: #0056b3;
+}
+
+.tag-selector select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-top: 10px;
+    outline: none;
+}
+
+.tag-selector label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.context-menu {
     position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    padding: 8px 0;
     z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 150px;
+}
+
+.context-menu li {
+    list-style: none;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.context-menu li:hover {
+    background-color: #f4f4f4;
+}
+
+.context-menu .delete-option {
+    color: #e63946;
+    font-weight: bold;
+}
+
+.context-menu .delete-option:hover {
+    background-color: #fce4e4;
+}
+
+.context-menu .add-tag-option {
+    color: #007bff;
+    font-weight: normal;
+}
+
+.context-menu .add-tag-option:hover {
+    background-color: #e7f3ff;
 }
