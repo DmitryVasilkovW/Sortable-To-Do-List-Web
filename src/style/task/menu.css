@@ -18,12 +18,51 @@
 
 .tag-selector {
     position: fixed;
-    background-color: #fcfcfc;
-    border: 1px solid #ccc;
-    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    width: 300px;
 }
+
+.tag-selector button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.tag-selector button:hover {
+    background-color: #0056b3;
+}
+
+.tag-selector select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-top: 10px;
+    outline: none;
+}
+
+.tag-selector label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
