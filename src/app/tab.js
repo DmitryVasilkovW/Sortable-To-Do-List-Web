@@ -52,6 +52,8 @@ function addNewTab() {
     }
 
     document.getElementById(`add-task-btn-${tabIndex}`).onclick = () => addTask(tabIndex);
+
+    updateTabStyles();
 }
 
 function showDeleteConfirmation(tabIndex) {
@@ -72,4 +74,15 @@ function deleteTab(tabIndex) {
             switchTab(0);
         }
     }
+
+    updateTabStyles();
+}
+
+function updateTabStyles() {
+    const tabs = document.querySelectorAll('.tab');
+    const tabCount = tabs.length;
+
+    tabs.forEach(tab => {
+        tab.style.flex = `1 0 ${100 / tabCount}%`;
+    });
 }
