@@ -15,7 +15,7 @@ function renderTags() {
 
     tags.forEach((tag, index) => {
         const li = document.createElement('li');
-        li.textContent = `${tag.name} (Вес: ${tag.weight})`;
+        li.textContent = `${tag.name} (Weight: ${tag.weight})`;
         li.dataset.index = index.toFixed();
         li.draggable = true;
         tagList.appendChild(li);

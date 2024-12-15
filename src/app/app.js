@@ -1,4 +1,4 @@
-let todoListsData = [];
+let todoListsData = loadTodoListsData();
 
 document.addEventListener('DOMContentLoaded', function () {
     const sidebar = document.getElementById('sidebar');
@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
         sidebar.classList.remove('open');
         mainContent.style.marginLeft = '0';
     }
+    renderAllData()
 
     renderTags();
-    addNewTab();
 });
 
 function toggleSidebar() {
@@ -30,5 +30,28 @@ function toggleSidebar() {
     } else {
         mainContent.style.marginLeft = '0';
         localStorage.setItem('sidebarOpen', 'false');
+    }
+}
+
+function saveTodoListsData() {
+    localStorage.setItem('todoListsData', JSON.stringify(todoListsData));
+}
+
+function loadTodoListsData() {
+    const savedData = localStorage.getItem('todoListsData') || "[]";
+    return JSON.parse(savedData);
+}
+
+function renderAllData() {
+    if (todoListsData.length === 0) {
+        addNewTab();
+    } else {
+        todoListsData = loadTodoListsData()
+        todoListsData.forEach((tabData, i) => {
+            addNewTab(i)
+            tabData.forEach(taskData => {
+                renderTask(taskData, i);
+            })
+        })
     }
 }

@@ -11,11 +11,25 @@ function addTask(tabIndex) {
             todoListsData[tabIndex] = [];
         }
         todoListsData[tabIndex].push({ text: taskValue, tags: [] });
+        saveTodoListsData();
 
         taskInput.value = '';
     } else {
         alert('Please enter a task');
     }
+}
+
+function renderTask(taskData, tabIndex) {
+    const li = getTaskLiByData(taskData, tabIndex);
+    const taskList = document.getElementById(`task-list-${tabIndex}`);
+    taskList.appendChild(li);
+}
+
+function getTaskLiByData(taskData, tabIndex) {
+    if (taskData.tags.length === 0) {
+        return createTask(taskData.text, null, tabIndex)
+    }
+    return createTask(taskData.text, taskData.tags, tabIndex)
 }
 
 function updateTaskDisplay(taskElement, taskData, tabIndex) {

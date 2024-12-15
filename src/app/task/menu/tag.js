@@ -34,6 +34,7 @@ function addTagToTask(taskElement, tabIndex, tagName) {
         taskData.tags.push(parsedTag);
         updateTaskDisplay(taskElement, taskData, tabIndex);
         sortTasks(tabIndex);
+        saveTodoListsData();
     } else {
         alert(`Tag "${tagName}" уже добавлен к задаче!`);
     }

@@ -20,15 +20,15 @@ function switchTab(tabIndex) {
     loadTasks(tabIndex);
 }
 
-function addNewTab() {
+function addNewTab(ind) {
     const tabsContainer = document.getElementById('tabs');
     const todoListsContainer = document.getElementById('todo-lists');
-    const tabIndex = Object.keys(todoListsData).length;
+    const tabIndex = getTabIndex(ind);
 
     const newTab = document.createElement('div');
     newTab.classList.add('tab');
     newTab.id = `tab-${tabIndex}`;
-    newTab.textContent = `Sheet ${tabIndex + 1}`;
+    newTab.textContent = `Sheet ${tabIndex + 1}`
     newTab.onclick = () => switchTab(tabIndex);
     newTab.onmouseover = () => (hoveredTabId = tabIndex);
     newTab.onmouseout = () => (hoveredTabId = null);
@@ -44,7 +44,9 @@ function addNewTab() {
     `;
     todoListsContainer.appendChild(newTodoList);
 
-    todoListsData[tabIndex] = [];
+    if (isNaN(ind)) {
+        todoListsData[tabIndex] = [];
+    }
 
     if (tabIndex === 0) {
         newTab.classList.add('active');
@@ -54,6 +56,13 @@ function addNewTab() {
     document.getElementById(`add-task-btn-${tabIndex}`).onclick = () => addTask(tabIndex);
 
     updateTabStyles();
+}
+
+function getTabIndex(ind) {
+    if (isNaN(ind)) {
+        return Object.keys(todoListsData).length;
+    }
+    return ind;
 }
 
 function showDeleteConfirmation(tabIndex) {
@@ -67,6 +76,7 @@ function deleteTab(tabIndex) {
     document.getElementById(`tab-${tabIndex}`).remove();
     document.getElementById(`list-${tabIndex}`).remove();
     delete todoListsData[tabIndex];
+    saveTodoListsData();
 
     if (currentTab === tabIndex) {
         currentTab = 0;
