@@ -40,6 +40,8 @@ function addNewTab(ind) {
     newTodoList.innerHTML = `
         <input type="text" id="task-input-${tabIndex}" placeholder="Add a task">
         <button id="add-task-btn-${tabIndex}">Add Task</button>
+        <button id="apply-filter-${tabIndex}">Filter</button>
+        <button id="reset-filter-${tabIndex}"">Reset</button>
         <ul id="task-list-${tabIndex}"></ul>
     `;
     todoListsContainer.appendChild(newTodoList);
@@ -55,6 +57,8 @@ function addNewTab(ind) {
     }
 
     document.getElementById(`add-task-btn-${tabIndex}`).onclick = () => addTask(tabIndex);
+    document.getElementById(`apply-filter-${tabIndex}`).onclick = () => applyFilter(tabIndex);
+    document.getElementById(`reset-filter-${tabIndex}`).onclick = () => resetFilter(tabIndex);
 
     updateTabStyles();
 }
