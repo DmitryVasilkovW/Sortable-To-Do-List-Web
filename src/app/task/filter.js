@@ -32,7 +32,6 @@ function resetFilter(tabIndex) {
     filterInput.value = '';
 }
 
-
 function openFilterModal(tabIndex) {
     if (!document.getElementById('filter-modal')) {
         const modal = document.createElement('div');
@@ -42,7 +41,18 @@ function openFilterModal(tabIndex) {
         modal.innerHTML = `
             <div class="modal-content">
                 <h3>Filter Tasks by Tags</h3>
-                <input type="text" id="filter-modal-input" placeholder="Enter tags (comma-separated)">
+                <div id="tags-selector">
+                    ${tags
+            .map(
+                (tag) => `
+                        <label>
+                            <input type="checkbox" value="${tag.name}">
+                            ${tag.name}
+                        </label>
+                    `
+            )
+            .join('')}
+                </div>
                 <div class="modal-buttons">
                     <button id="filter-cancel-button">Cancel</button>
                     <button id="filter-apply-button">Apply</button>
@@ -56,20 +66,19 @@ function openFilterModal(tabIndex) {
     const modal = document.getElementById('filter-modal');
     const applyButton = document.getElementById('filter-apply-button');
     const cancelButton = document.getElementById('filter-cancel-button');
-    const inputField = document.getElementById('filter-modal-input');
-
-    inputField.value = '';
 
     modal.classList.remove('hidden');
-    
+
     applyButton.onclick = () => {
-        const tagsString = inputField.value.trim();
-        const selectedTags = tagsString ? tagsString.split(',').map(tag => tag.trim()) : [];
+        const selectedTags = Array.from(
+            modal.querySelectorAll('#tags-selector input:checked')
+        ).map((checkbox) => checkbox.value);
+
         if (selectedTags.length > 0) {
             filterTasks(tabIndex, selectedTags);
             closeFilterModal();
         } else {
-            alert('Please enter at least one tag to filter!');
+            alert('Please select at least one tag to filter!');
         }
     };
 
