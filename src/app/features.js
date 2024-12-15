@@ -1,25 +1,20 @@
-function displayLoadTime() {
+(function () {
     window.addEventListener("load", () => {
-        const performanceEntries = performance.getEntriesByType("navigation");
+        const timing = performance.timing;
+        const loadTime = (timing.domContentLoadedEventEnd - timing.navigationStart) / 1000;
 
-        if (performanceEntries.length > 0) {
-            const navigationEntry = performanceEntries[0];
-            const loadTime = (navigationEntry.loadEventEnd - navigationEntry.startTime).toFixed(2);
-
-            const loadTimeSpan = document.getElementById("load-time");
-            if (loadTimeSpan) {
-                loadTimeSpan.textContent = `| loading time: ${loadTime} ms`;
-            }
-        } else {
-            const timing = performance.timing;
-            const loadTime = (timing.loadEventEnd - timing.navigationStart).toFixed(2);
-
-            const loadTimeSpan = document.getElementById("load-time");
-            if (loadTimeSpan) {
-                loadTimeSpan.textContent = `| loading time: ${loadTime} ms`;
-            }
+        const span = document.getElementById("load-time");
+        if (span) {
+            span.textContent = `| loading time: ${loadTime.toFixed(2) * 1000} ms`;
         }
     });
-}
 
-displayLoadTime();
+    const navLinks = document.querySelectorAll("#tag-list a");
+    const currentPage = window.location.pathname.split("/").pop();
+
+    navLinks.forEach((link) => {
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+        }
+    });
+})();
