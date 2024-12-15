@@ -46,6 +46,7 @@ function addNewTab(ind) {
 
     if (isNaN(ind)) {
         todoListsData[tabIndex] = [];
+        saveTodoListsData();
     }
 
     if (tabIndex === 0) {

@@ -1,9 +1,10 @@
-let tags = [];
+let tags = loadTags();
 
 function addTag() {
     const newTagInput = document.getElementById('new-tag-input').value;
     if (newTagInput) {
         tags.push({ name: newTagInput, weight: tags.length });
+        saveTags();
         renderTags();
         document.getElementById('new-tag-input').value = '';
     }
@@ -62,6 +63,7 @@ function updateAllTaskWeights() {
             });
         });
         sortTasks(tabIndex);
+        saveTags();
     });
 }
 
@@ -69,3 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
     renderTags();
     enableTagDragging();
 });
+
+function saveTags() {
+    localStorage.setItem('tags', JSON.stringify(tags));
+}
+
+function loadTags() {
+    const savedData = localStorage.getItem('tags') || "[]";
+    return JSON.parse(savedData);
+}

@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
         sidebar.classList.remove('open');
         mainContent.style.marginLeft = '0';
     }
+    
     renderAllData()
-
     renderTags();
 });
 
