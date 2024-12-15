@@ -1,6 +1,6 @@
 let todoListsData = loadTodoListsData();
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.querySelector('.main-content');
 
@@ -13,9 +13,10 @@ document.addEventListener('DOMContentLoaded', function () {
         sidebar.classList.remove('open');
         mainContent.style.marginLeft = '0';
     }
-    
+
     renderAllData()
     renderTags();
+    await getRandomFact();
 });
 
 function toggleSidebar() {
