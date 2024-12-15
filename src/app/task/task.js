@@ -71,11 +71,14 @@ function loadTasks(tabIndex) {
 
 function createTask(text, tags, tabIndex) {
     const li = document.createElement('li');
+    const task = document.createElement('div');
     const taskText = document.createElement('span');
     taskText.classList.add('task-text');
     taskText.textContent = text;
-    li.appendChild(taskText);
-
+    task.className = 'task';
+    task.appendChild(taskText);
+    li.appendChild(task);
+    
     const menuButton = createMenuButton(li, tabIndex);
     li.appendChild(menuButton);
 
@@ -83,7 +86,7 @@ function createTask(text, tags, tabIndex) {
         const tagsContainer = document.createElement('div');
         tagsContainer.classList.add('tags-container');
         showTags(tagsContainer, tags);
-        li.appendChild(tagsContainer);
+        task.appendChild(tagsContainer);
     }
 
    return li
