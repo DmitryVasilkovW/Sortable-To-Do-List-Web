@@ -1,4 +1,4 @@
-ocument.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const now = dayjs();
     const daysInMonth = now.daysInMonth();
     const firstDayOfMonth = now.startOf("month").day();
