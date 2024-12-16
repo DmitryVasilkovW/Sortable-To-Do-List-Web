@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const now = dayjs();
     const daysInMonth = now.daysInMonth();
     const firstDayOfMonth = now.startOf("month").day();
@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const calendar = document.getElementById("calendar");
 
-    const daysOfWeek = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+    const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const daysHeader = daysOfWeek
         .map((day) => `<div class="day-header">${day}</div>`)
         .join("");
@@ -29,4 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ${daysHTML}
     </div>
   `;
+
+    await getRandomFact();
 });
