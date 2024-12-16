@@ -11,11 +11,25 @@ function addTask(tabIndex) {
             todoListsData[tabIndex] = [];
         }
         todoListsData[tabIndex].push({ text: taskValue, tags: [] });
+        saveTodoListsData();
 
         taskInput.value = '';
     } else {
         alert('Please enter a task');
     }
+}
+
+function renderTask(taskData, tabIndex) {
+    const li = getTaskLiByData(taskData, tabIndex);
+    const taskList = document.getElementById(`task-list-${tabIndex}`);
+    taskList.appendChild(li);
+}
+
+function getTaskLiByData(taskData, tabIndex) {
+    if (taskData.tags.length === 0) {
+        return createTask(taskData.text, null, tabIndex)
+    }
+    return createTask(taskData.text, taskData.tags, tabIndex)
 }
 
 function updateTaskDisplay(taskElement, taskData, tabIndex) {
@@ -57,11 +71,14 @@ function loadTasks(tabIndex) {
 
 function createTask(text, tags, tabIndex) {
     const li = document.createElement('li');
+    const task = document.createElement('div');
     const taskText = document.createElement('span');
     taskText.classList.add('task-text');
     taskText.textContent = text;
-    li.appendChild(taskText);
-
+    task.className = 'task';
+    task.appendChild(taskText);
+    li.appendChild(task);
+    
     const menuButton = createMenuButton(li, tabIndex);
     li.appendChild(menuButton);
 
@@ -69,7 +86,7 @@ function createTask(text, tags, tabIndex) {
         const tagsContainer = document.createElement('div');
         tagsContainer.classList.add('tags-container');
         showTags(tagsContainer, tags);
-        li.appendChild(tagsContainer);
+        task.appendChild(tagsContainer);
     }
 
    return li

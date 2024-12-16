@@ -1,9 +1,10 @@
-let tags = [];
+let tags = loadTags();
 
 function addTag() {
     const newTagInput = document.getElementById('new-tag-input').value;
     if (newTagInput) {
         tags.push({ name: newTagInput, weight: tags.length });
+        saveTags();
         renderTags();
         document.getElementById('new-tag-input').value = '';
     }
@@ -15,7 +16,7 @@ function renderTags() {
 
     tags.forEach((tag, index) => {
         const li = document.createElement('li');
-        li.textContent = `${tag.name} (Вес: ${tag.weight})`;
+        li.textContent = `${tag.name} (Weight: ${tag.weight})`;
         li.dataset.index = index.toFixed();
         li.draggable = true;
         tagList.appendChild(li);
@@ -62,6 +63,7 @@ function updateAllTaskWeights() {
             });
         });
         sortTasks(tabIndex);
+        saveTags();
     });
 }
 
@@ -69,3 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
     renderTags();
     enableTagDragging();
 });
+
+function saveTags() {
+    localStorage.setItem('tags', JSON.stringify(tags));
+}
+
+function loadTags() {
+    const savedData = localStorage.getItem('tags') || "[]";
+    return JSON.parse(savedData);
+}
